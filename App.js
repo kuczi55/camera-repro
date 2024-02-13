@@ -10,8 +10,9 @@ import {
   NativeModules,
   ActivityIndicator,
 } from "react-native";
-import { Camera, CameraType } from "expo-camera";
+import { CameraView } from "expo-camera/next";
 import { useRef, useEffect, useState } from "react";
+import { Camera, CameraType } from "expo-camera";
 
 const TRANSLUCENT_BG = "#717171C1";
 const STATUS_BAR_HEIGHT = NativeModules.StatusBarManager.HEIGHT;
@@ -23,6 +24,7 @@ export default function App() {
   const [review, setReview] = useState(false);
   const [image, setImage] = useState();
   const [processingPhoto, setProcessingPhoto] = useState(false);
+  const [type, setType] = useState(CameraType.back);
 
   const permissionFunction = async () => {
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -36,10 +38,19 @@ export default function App() {
     permissionFunction();
   }, []);
 
+  async function toggleCameraType() {
+    await takePicture();
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+    camera.current?.resumePreview();
+  }
+
   const takePicture = async () => {
     setProcessingPhoto(true);
     try {
       const photo = await camera.current.takePictureAsync();
+      // camera.current?.pausePreview();
       if (photo) {
         setImage(photo);
         setReview(true);
@@ -48,6 +59,7 @@ export default function App() {
       console.log("Error taking picture", e);
     } finally {
       setProcessingPhoto(false);
+      // camera.current?.resumePreview();
     }
   };
 
@@ -55,17 +67,18 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       {!review ? (
         <>
-          <Camera
+          <CameraView
+            type={type}
             ref={camera}
             // useCamera2Api
-            style={Platform.select({
-              ios: styles.fullScreen,
-              android: {
-                height,
-                width: (height / 4) * 3,
-              },
-            })}
-            type={CameraType.back}
+            style={styles.fullScreen}
+            // style={Platform.select({
+            //   ios: styles.fullScreen,
+            //   android: {
+            //     height,
+            //     width: (height / 4) * 3,
+            //   },
+            // })}
             onCameraReady={() => {
               setCameraReady(true);
             }}

@@ -8,12 +8,12 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "^48.0.17",
-    "expo-status-bar": "~1.4.4",
+    "expo": "^50.0.6",
+    "expo-camera": "~14.0.4",
+    "expo-splash-screen": "~0.26.4",
+    "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
-    "react-native": "0.71.14",
-    "expo-camera": "~13.2.1",
-    "expo-splash-screen": "~0.18.2"
+    "react-native": "0.73.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
