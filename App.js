@@ -10,7 +10,6 @@ import {
   NativeModules,
   ActivityIndicator,
 } from "react-native";
-import { CameraView } from "expo-camera/next";
 import { useRef, useEffect, useState } from "react";
 import { Camera, CameraType } from "expo-camera";
 
@@ -67,7 +66,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       {!review ? (
         <>
-          <CameraView
+          <Camera
             type={type}
             ref={camera}
             // useCamera2Api
