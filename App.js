@@ -70,14 +70,14 @@ export default function App() {
             type={type}
             ref={camera}
             // useCamera2Api
-            style={styles.fullScreen}
-            // style={Platform.select({
-            //   ios: styles.fullScreen,
-            //   android: {
-            //     height,
-            //     width: (height / 4) * 3,
-            //   },
-            // })}
+            // style={styles.fullScreen}
+            style={Platform.select({
+              ios: styles.fullScreen,
+              android: {
+                height,
+                width: (height / 4) * 3,
+              },
+            })}
             onCameraReady={() => {
               setCameraReady(true);
             }}
